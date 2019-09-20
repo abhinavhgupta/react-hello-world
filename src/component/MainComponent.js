@@ -1,15 +1,14 @@
 import React from 'react';
 import Menu from './MenuComponent';
-
-import { DISHES } from './dishes';
+import { DISHES } from '../assets/dishes';
 import Header from './HeaderComponent';
 import Footer from './FooterComponent';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import Home from './HomeComponent';
 import Contact from './ContactComponent';
-import { COMMENTS } from './comments';
-import { PROMOTIONS } from './promotions';
-import { LEADERS } from './leaders';
+import { COMMENTS } from '../assets/comments';
+import { PROMOTIONS } from '../assets/promotions';
+import { LEADERS } from '../assets/leaders';
 import DishDetail from './DishdetailComponent';
 import About from './AboutComponent';
 
