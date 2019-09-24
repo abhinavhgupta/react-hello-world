@@ -91,7 +91,7 @@ function RenderLeader({ leader }) {
                 <Media left middle className="mr-5">
                     <Media object src={leader.image} alt={leader.name}></Media>
                 </Media>
-                <Media body classname="ml-5">
+                <Media body className="ml-5">
                     <Media heading>{leader.name}</Media>
                     <p>{leader.designation}</p>
                     <p>{leader.description}</p>
