@@ -9,8 +9,7 @@ function RenderDish({ dish }) {
     return (
         // <Card key={dish.id}
         //     onClick={() => this.props.onClick(dish.id)}>
-        <Card key={dish.id}
-        >
+        <Card key={dish.id}>
             <CardImg src={dish.image} alt={dish.name} />
             <CardBody>
                 <CardTitle >{dish.name}</CardTitle>
@@ -21,8 +20,9 @@ function RenderDish({ dish }) {
         </Card>
     );
 }
+
 // render comments 
-function RenderComments({ comments }) {
+function RenderComments({ comments, addComment, dishId }) {
     if (comments != null) {
         const commentsArea = comments.map((comment) => {
             return (
@@ -39,7 +39,9 @@ function RenderComments({ comments }) {
                 <ul className="list-unstyled">
                     {commentsArea}
                 </ul>
-                <CommentForm />
+                <CommentForm
+                    dishId={dishId}
+                    addCommentToFrom={addComment} />
             </div>
         );
     } else {
@@ -48,16 +50,23 @@ function RenderComments({ comments }) {
         );
     }
 }
+
+
 const DishDetail = (props) => {
-    console.log(props);
     if (props.dish != null) {
         return (
             <div className="container">
-                <div className="row"> <Breadcrumb>
-
-                    <BreadcrumbItem><Link to='/menu'>Menu</Link></BreadcrumbItem>
-                    <BreadcrumbItem active >{props.dish.name}</BreadcrumbItem>
-                </Breadcrumb>
+                <div className="row">
+                    <Breadcrumb>
+                        <BreadcrumbItem>
+                            <Link to='/menu'>
+                                Menu
+                            </Link>
+                        </BreadcrumbItem>
+                        <BreadcrumbItem active >
+                            {props.dish.name}
+                        </BreadcrumbItem>
+                    </Breadcrumb>
                     <div className="col-12">
                         <h3>{props.dish.name}</h3>
                         <hr />
@@ -65,12 +74,13 @@ const DishDetail = (props) => {
                 </div>
                 <div className="row">
                     <div className="col-12 col-md-5 m-1">
-                        {/* {this.RenderDish(props.dish)} */}
-                        <RenderDish dish={props.dish}></RenderDish>
+                        <RenderDish dish={props.dish} />
                     </div>
                     <div className="col-12 col-md-5 m-1">
-                        <RenderComments comments={props.comments}></RenderComments>
-                        {/* {this.RenderComments(props.dish.comments)} */}
+                        <RenderComments
+                            comments={props.comments}
+                            addComment={props.addCommentToDishDetail}
+                            dishId={props.dish.id} />
                     </div>
                 </div>
             </div>
@@ -103,7 +113,8 @@ class CommentForm extends React.Component {
     }
 
     handleSubmit(values) {
-        alert(JSON.stringify(values));
+        this.toggleModal();
+        this.props.addCommentToFrom(this.props.dishId, values.rating, values.name, values.comment);
     }
 
     render() {
