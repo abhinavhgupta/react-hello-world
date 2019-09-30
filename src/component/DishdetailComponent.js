@@ -4,6 +4,7 @@ import { Card, CardImg, CardText, CardBody, Label, CardTitle, ModalHeader, Modal
 import { Link } from 'react-router-dom';
 import { LocalForm, Control, Errors } from 'react-redux-form';
 import Loading from './LoadingComponent';
+import { baseUrl } from '../shared/baseUrl';
 
 // render a particular dish
 function RenderDish({ dish }) {
@@ -11,7 +12,7 @@ function RenderDish({ dish }) {
         // <Card key={dish.id}
         //     onClick={() => this.props.onClick(dish.id)}>
         <Card key={dish.id}>
-            <CardImg src={dish.image} alt={dish.name} />
+            <CardImg src={baseUrl + dish.image} alt={dish.name} />
             <CardBody>
                 <CardTitle >{dish.name}</CardTitle>
                 <CardText>
@@ -55,7 +56,7 @@ function RenderComments({ comments, addComment, dishId }) {
 
 const DishDetail = (props) => {
     console.log('DishDetail ', props);
-    if (props.isLoading) {
+    if (props.dishesLoading) {
         return (
             <div className="container">
                 <div className="row">
@@ -63,7 +64,7 @@ const DishDetail = (props) => {
                 </div>
             </div>
         )
-    } else if (props.errmsg) {
+    } else if (props.dishesErrMsg) {
         return (
             <div className="container">
                 <div className="row">

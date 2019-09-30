@@ -36,10 +36,13 @@ function Home(props) {
                     <RenderCard
                         item={props.dish}
                         isLoading={props.dishesLoading}
-                        errorMsg={props.errMsg} />
+                        errorMsg={props.dishesErrMsg} />
                 </div>
                 <div className="col-12 col-md m-1">
-                    <RenderCard item={props.promotion} />
+                    <RenderCard
+                        item={props.promotions}
+                        isLoading={props.promotionsLoading}
+                        errorMsg={props.promotionsErrMsg} />
                 </div>
                 <div className="col-12 col-md m-1">
                     <RenderCard item={props.leader} />

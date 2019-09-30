@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "bootstrap-social": "^5.1.1",
+    "cross-fetch": "^3.0.4",
     "font-awesome": "^4.7.0",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",

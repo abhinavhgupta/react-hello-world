@@ -1,4 +1,5 @@
-import { LEADERS } from "../assets/leaders";
+import { LEADERS } from "../shared/leaders";
+
 
 
 export const LeadersReducer = (state = LEADERS, action) => {
