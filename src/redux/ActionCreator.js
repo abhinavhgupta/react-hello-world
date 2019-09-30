@@ -19,8 +19,22 @@ export const fetchDishesAction = () => (dispatch) => {
     dispatch(dishesLoadingAction(true));
 
     return fetch(baseUrl + 'dishes')
-        .then(response => response.json())
-        .then(dishes => dispatch(addDishesAction(dishes)));
+        .then(response => {
+            if (response.ok) {
+                return response.json()
+            } else {
+                var error = new Error('Error')
+                error.response = response;
+                throw error;
+            }
+        }, error => {
+            var errorMsg = new Error(error.message);
+            throw errorMsg;
+        })
+        .then(dishes => dispatch(addDishesAction(dishes)))
+        .catch(error => {
+            dispatch(dishesFailedAction(error.message));
+        });
 };
 
 export const dishesLoadingAction = () => ({
@@ -41,8 +55,22 @@ export const fetchCommentsAction = () => (dispatch) => {
     var url = baseUrl + 'comments';
     console.log('url ', url);
     return fetch(url)
-        .then(response => response.json())
-        .then(comments => dispatch(addCommentsAction(comments)));
+        .then(response => {
+            if (response.ok) {
+                return response.json()
+            } else {
+                var error = new Error('Error')
+                error.response = response;
+                throw error;
+            }
+        }, error => {
+            var errorMsg = new Error(error.message);
+            throw errorMsg;
+        })
+        .then(comments => dispatch(addCommentsAction(comments)))
+        .catch(error => {
+            dispatch(commentsFailedAction(error.message));
+        });
 };
 
 export const commentsFailedAction = (error) => ({
@@ -60,8 +88,21 @@ export const fetchPromotionsAction = () => (dispatch) => {
     dispatch(promotionsLoadingAction(true));
 
     return fetch(baseUrl + 'promotions')
-        .then(response => response.json())
-        .then(promotions => dispatch(addPromotionsAction(promotions)));
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                var error = new Error('Error')
+                error.response = response;
+                throw error;
+            }
+        }, error => {
+            var errorMsg = new Error(error.message);
+            throw errorMsg;
+        })
+        .then(promotions => dispatch(addPromotionsAction(promotions))).catch(error => {
+            dispatch(promotionsFailedAction(error.message));
+        });
 };
 
 export const promotionsLoadingAction = () => ({
