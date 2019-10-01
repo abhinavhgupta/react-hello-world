@@ -3,19 +3,47 @@ import { baseUrl } from '../shared/baseUrl';
 
 
 // Functions that creates an action object 
-export const addCommentAction = (dishId, rating, auther, comment) => ({
+export const addCommentAction = (comment) => ({
     type: ActionTypes.ADD_COMMENT,// every action object should contain a type
-    payload: {
+    payload: comment
+});
+
+export const postCommentAction = (dishId, rating, author, comment) => (dispatch) => {
+
+    const newComment = {
         dishId: dishId,
         rating: rating,
-        author: auther,
+        author: author,
         comment: comment
-    }
-});
+    };
+    newComment.date = new Date().toISOString();
+
+    return fetch(baseUrl + 'comments', {
+        method: "POST",
+        body: JSON.stringify(newComment),
+        headers: {
+            "Content-Type": "application/json"
+        },
+        credentials: "same-origin"
+    })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                var error = new Error('Error ' + response.status + ': ' + response.statusText);
+                error.response = response;
+                throw error;
+            }
+        },
+            error => {
+                throw error;
+            })
+        .then(response => dispatch(addCommentAction(response)))
+        .catch(error => { console.log('post comments', error.message); alert('Your comment could not be posted\nError: ' + error.message); });
+};
 
 //It is a Thunk which returs a dispatch function
 export const fetchDishesAction = () => (dispatch) => {
-    console.log();
     dispatch(dishesLoadingAction(true));
 
     return fetch(baseUrl + 'dishes')
@@ -53,7 +81,6 @@ export const addDishesAction = (dishes) => ({
 
 export const fetchCommentsAction = () => (dispatch) => {
     var url = baseUrl + 'comments';
-    console.log('url ', url);
     return fetch(url)
         .then(response => {
             if (response.ok) {
@@ -84,7 +111,6 @@ export const addCommentsAction = (comments) => ({
 });
 
 export const fetchPromotionsAction = () => (dispatch) => {
-    console.log();
     dispatch(promotionsLoadingAction(true));
 
     return fetch(baseUrl + 'promotions')

@@ -15,12 +15,8 @@ export const CommentsReducer = (state = {
             }
         case ActionTypes.ADD_COMMENT:
             var comment = action.payload;
-            comment.id = state.comments.length;
-            comment.rating = '';
-            comment.date = new Date().toISOString();
-            console.log("Comment: ", action.payload);
             //return state.concat(comment);
-            return { ...state, comments: { ...state.comments, comment } };
+            return { ...state, comments: [...state.comments, comment] };
         case ActionTypes.COMMENTS_FAILED:
             return {
                 ...state,

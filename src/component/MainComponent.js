@@ -8,7 +8,7 @@ import Contact from './ContactComponent';
 import DishDetail from './DishdetailComponent';
 import About from './AboutComponent';
 import { connect } from 'react-redux';
-import { addCommentAction, fetchDishesAction, fetchCommentsAction, fetchPromotionsAction } from '../redux/ActionCreator';
+import { postCommentAction, fetchDishesAction, fetchCommentsAction, fetchPromotionsAction } from '../redux/ActionCreator';
 import { actions } from 'react-redux-form';
 
 const mapStateToProps = state => {
@@ -22,7 +22,7 @@ const mapStateToProps = state => {
 
 
 const mapDispatchToProps = (dispatch) => ({
-    addCommentToProps: (dishId, rating, author, comment) => dispatch(addCommentAction(dishId, rating, author, comment)),
+    postCommentToProps: (dishId, rating, author, comment) => dispatch(postCommentAction(dishId, rating, author, comment)),
     fetchDishes: () => { dispatch(fetchDishesAction()) },
     fetchComments: () => { dispatch(fetchCommentsAction()) },
     fetchPromos: () => { dispatch(fetchPromotionsAction()) },
@@ -45,14 +45,12 @@ class Main extends React.Component {
      * very good time to fetch any data that I require for my application
      * */
     componentDidMount() {
-        console.log('componentDidMount', this.props);
         this.props.fetchDishes();
         this.props.fetchComments();
         this.props.fetchPromos();
     }
 
     render() {
-        console.log('Main ', this.props);
         const HomePage = () => {
             return (
                 <Home
@@ -80,7 +78,7 @@ class Main extends React.Component {
                     comments={this.props.comments.comments.filter((comment) =>
                         comment.dishId === parseInt(match.params.dishId, 10))}
                     commentsErrMsg={this.props.comments.errorMessage}
-                    addCommentToDishDetail={this.props.addCommentToProps} />
+                    postCommentToDishDetail={this.props.postCommentToProps} />
             )
         }
 
