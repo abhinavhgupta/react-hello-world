@@ -8,7 +8,7 @@ import Contact from './ContactComponent';
 import DishDetail from './DishdetailComponent';
 import About from './AboutComponent';
 import { connect } from 'react-redux';
-import { postCommentAction, fetchDishesAction, fetchCommentsAction, fetchPromotionsAction, fetchLeadersAction } from '../redux/ActionCreator';
+import { postCommentAction, fetchDishesAction, fetchCommentsAction, fetchPromotionsAction, fetchLeadersAction, postFeedbackAction } from '../redux/ActionCreator';
 import { actions } from 'react-redux-form';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
@@ -28,7 +28,8 @@ const mapDispatchToProps = (dispatch) => ({
     fetchComments: () => { dispatch(fetchCommentsAction()) },
     fetchPromos: () => { dispatch(fetchPromotionsAction()) },
     fetchLeaders: () => { dispatch(fetchLeadersAction()) },
-    resetFeedbackForm: () => { dispatch(actions.reset('feedback')) }
+    resetFeedbackForm: () => { dispatch(actions.reset('feedback')) },
+    postFeedbackToProps: (firstName, lastName, telNum, agree, email, contactType, message) => dispatch(postFeedbackAction(firstName, lastName, telNum, agree, email, contactType, message))
 
 })
 
@@ -98,7 +99,8 @@ class Main extends React.Component {
                             <Route path="/aboutus" component={AboutPage}></Route>
                             <Route exact path="/menu" component={() => <Menu dishes={this.props.dishes} />}></Route>
                             <Route path="/menu/:dishId" component={DishWithId}></Route>
-                            <Route exact path='/contactus' component={() => <Contact resetFeedbackForm={this.props.resetFeedbackForm} />} />
+                            <Route exact path='/contactus' component={() => <Contact resetFeedbackForm={this.props.resetFeedbackForm}
+                                postFeedbackToFrom={this.props.postFeedbackToProps} />} />
                             <Redirect to="/home"></Redirect>
                         </Switch>
                     </CSSTransition>

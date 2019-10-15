@@ -18,6 +18,7 @@ class Contact extends React.Component {
 
     handleSubmit(values) {
         console.log('Submit', JSON.stringify(values));
+        this.props.postFeedbackToFrom(values.firstName, values.lastName, values.telNum, values.agree, values.email, values.contactType, values.message);
         this.props.resetFeedbackForm();
     }
 
