@@ -1,10 +1,11 @@
 import React from 'react';
 import {
-    Card, CardText, CardBody,
+    Card, CardText, CardBody, CardImg,
     CardTitle, CardSubtitle
 } from 'reactstrap';
 import Loading from './LoadingComponent';
 import { FadeTransform } from 'react-animation-components';
+import { baseUrl } from '../shared/baseUrl';
 
 function RenderCard({ item, isLoading, errorMsg }) {
     if (isLoading) {
@@ -22,6 +23,7 @@ function RenderCard({ item, isLoading, errorMsg }) {
             }}>
                 <Card>
                     <CardBody>
+                        <CardImg src={baseUrl + item.image} alt={item.name} />
                         <CardTitle>{item.name}</CardTitle>
                         {item.designation ? <CardSubtitle>{item.designation}</CardSubtitle> : null}
                         <CardText>{item.description}</CardText>
@@ -50,7 +52,9 @@ function Home(props) {
                         errorMsg={props.promotionsErrMsg} />
                 </div>
                 <div className="col-12 col-md m-1">
-                    <RenderCard item={props.leader} />
+                    <RenderCard item={props.leader}
+                        isLoading={props.leadersLoading}
+                        errorMsg={props.leadersErrMsg} />
                 </div>
             </div>
         </div>

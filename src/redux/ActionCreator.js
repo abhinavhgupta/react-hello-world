@@ -144,3 +144,33 @@ export const promotionsFailedAction = (err) => ({
     type: ActionTypes.PROMOS_FAILED,
     payload: err
 });
+
+//Fetch Leaders
+export const fetchLeadersAction = () => (dispatch) => {
+    return fetch(baseUrl + 'leaders')
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                var error = new Error('Error')
+                error.response = response;
+                throw error;
+            }
+        }, error => {
+            var errorMsg = new Error(error.message);
+            throw errorMsg;
+        })
+        .then(leaders => dispatch(addLeadersAction(leaders))).catch(error => {
+            dispatch(leadersFailedAction(error.message));
+        });
+};
+
+export const addLeadersAction = (leaders) => ({
+    type: ActionTypes.ADD_LEADERS,
+    payload: leaders
+});
+
+export const leadersFailedAction = (err) => ({
+    type: ActionTypes.LEADERS_FAILED,
+    payload: err
+});

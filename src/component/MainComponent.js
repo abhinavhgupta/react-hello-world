@@ -8,7 +8,7 @@ import Contact from './ContactComponent';
 import DishDetail from './DishdetailComponent';
 import About from './AboutComponent';
 import { connect } from 'react-redux';
-import { postCommentAction, fetchDishesAction, fetchCommentsAction, fetchPromotionsAction } from '../redux/ActionCreator';
+import { postCommentAction, fetchDishesAction, fetchCommentsAction, fetchPromotionsAction, fetchLeadersAction } from '../redux/ActionCreator';
 import { actions } from 'react-redux-form';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
@@ -27,6 +27,7 @@ const mapDispatchToProps = (dispatch) => ({
     fetchDishes: () => { dispatch(fetchDishesAction()) },
     fetchComments: () => { dispatch(fetchCommentsAction()) },
     fetchPromos: () => { dispatch(fetchPromotionsAction()) },
+    fetchLeaders: () => { dispatch(fetchLeadersAction()) },
     resetFeedbackForm: () => { dispatch(actions.reset('feedback')) }
 
 })
@@ -38,6 +39,7 @@ class Main extends React.Component {
         this.props.fetchDishes();
         this.props.fetchComments();
         this.props.fetchPromos();
+        this.props.fetchLeaders();
     }
 
     /**
@@ -49,6 +51,7 @@ class Main extends React.Component {
         this.props.fetchDishes();
         this.props.fetchComments();
         this.props.fetchPromos();
+        this.props.fetchLeaders();
     }
 
     render() {
@@ -61,13 +64,15 @@ class Main extends React.Component {
                     promotions={this.props.promotions.promotions.filter((promo) => promo.featured)[0]}
                     promotionsLoading={this.props.promotions.isLoading}
                     promotionsErrMsg={this.props.promotions.errorMessage}
-                    leader={this.props.leaders.filter((leader) => leader.featured)[0]}
+                    leader={this.props.leaders.leaders.filter((leader) => leader.featured)[0]}
+                    leadersLoading={this.props.leaders.isLoading}
+                    leadersErrMsg={this.props.leaders.errorMessage}
                 />
             );
         }
 
         const AboutPage = () => {
-            return (<About leaders={this.props.leaders} />);
+            return (<About leaders={this.props.leaders.leaders} />);
         }
 
         const DishWithId = ({ match }) => {
