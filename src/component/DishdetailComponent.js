@@ -5,21 +5,24 @@ import { Link } from 'react-router-dom';
 import { LocalForm, Control, Errors } from 'react-redux-form';
 import Loading from './LoadingComponent';
 import { baseUrl } from '../shared/baseUrl';
+import { FadeTransform, Fade, Stagger } from 'react-animation-components';
 
 // render a particular dish
 function RenderDish({ dish }) {
     return (
-        // <Card key={dish.id}
-        //     onClick={() => this.props.onClick(dish.id)}>
-        <Card key={dish.id}>
-            <CardImg src={baseUrl + dish.image} alt={dish.name} />
-            <CardBody>
-                <CardTitle >{dish.name}</CardTitle>
-                <CardText>
-                    {dish.description}
-                </CardText>
-            </CardBody>
-        </Card>
+        <FadeTransform in transformProps={{
+            exitTransform: 'scale(0.5) translateY(-50%)'
+        }}>
+            <Card key={dish.id}>
+                <CardImg src={baseUrl + dish.image} alt={dish.name} />
+                <CardBody>
+                    <CardTitle >{dish.name}</CardTitle>
+                    <CardText>
+                        {dish.description}
+                    </CardText>
+                </CardBody>
+            </Card>
+        </FadeTransform>
     );
 }
 
@@ -28,10 +31,12 @@ function RenderComments({ comments, postComment, dishId }) {
     if (comments != null) {
         const commentsArea = comments.map((comment) => {
             return (
-                <li className="list-unstyled" key={comment.id}>
-                    <p>{comment.comment}</p>
-                    <p> -- {comment.author} , {comment.date}</p>
-                </li>
+                <Fade in>
+                    <li className="list-unstyled" key={comment.id}>
+                        <p>{comment.comment}</p>
+                        <p> -- {comment.author} , {comment.date}</p>
+                    </li>
+                </Fade>
             );
         });
 
@@ -39,7 +44,9 @@ function RenderComments({ comments, postComment, dishId }) {
             <div>
                 <h4>Comments</h4>
                 <ul className="list-unstyled">
-                    {commentsArea}
+                    <Stagger in >
+                        {commentsArea}
+                    </Stagger>
                 </ul>
                 <CommentForm
                     dishId={dishId}

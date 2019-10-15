@@ -4,6 +4,7 @@ import {
     CardTitle, CardSubtitle
 } from 'reactstrap';
 import Loading from './LoadingComponent';
+import { FadeTransform } from 'react-animation-components';
 
 function RenderCard({ item, isLoading, errorMsg }) {
     if (isLoading) {
@@ -16,13 +17,17 @@ function RenderCard({ item, isLoading, errorMsg }) {
         )
     } else {
         return (
-            <Card>
-                <CardBody>
-                    <CardTitle>{item.name}</CardTitle>
-                    {item.designation ? <CardSubtitle>{item.designation}</CardSubtitle> : null}
-                    <CardText>{item.description}</CardText>
-                </CardBody>
-            </Card>
+            <FadeTransform in transformProps={{
+                exitTransform: 'scale(0.5) translateY(-50%)'
+            }}>
+                <Card>
+                    <CardBody>
+                        <CardTitle>{item.name}</CardTitle>
+                        {item.designation ? <CardSubtitle>{item.designation}</CardSubtitle> : null}
+                        <CardText>{item.description}</CardText>
+                    </CardBody>
+                </Card>
+            </FadeTransform>
         );
     }
 }
