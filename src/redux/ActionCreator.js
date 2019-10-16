@@ -147,6 +147,8 @@ export const promotionsFailedAction = (err) => ({
 
 //Fetch Leaders
 export const fetchLeadersAction = () => (dispatch) => {
+    dispatch(leadersLoadingAction(true));
+
     return fetch(baseUrl + 'leaders')
         .then(response => {
             if (response.ok) {
@@ -164,6 +166,10 @@ export const fetchLeadersAction = () => (dispatch) => {
             dispatch(leadersFailedAction(error.message));
         });
 };
+
+export const leadersLoadingAction = () => ({
+    type: ActionTypes.LEADERS_LOADING
+});
 
 export const addLeadersAction = (leaders) => ({
     type: ActionTypes.ADD_LEADERS,

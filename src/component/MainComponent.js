@@ -73,7 +73,9 @@ class Main extends React.Component {
         }
 
         const AboutPage = () => {
-            return (<About leaders={this.props.leaders.leaders} />);
+            return (<About leaders={this.props.leaders.leaders}
+                leadersLoading={this.props.leaders.isLoading}
+                leadersErrMsg={this.props.leaders.errorMessage} />);
         }
 
         const DishWithId = ({ match }) => {

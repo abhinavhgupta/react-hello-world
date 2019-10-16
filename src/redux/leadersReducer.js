@@ -1,6 +1,7 @@
 import * as ActionTypes from './ActionsTypes';
 
 export const LeadersReducer = (state = {
+    isLoading: true,
     errorMessage: null,
     leaders: []
 }, action) => {
@@ -12,6 +13,13 @@ export const LeadersReducer = (state = {
                 errorMessage: null,
                 leaders: action.payload
             }
+        case ActionTypes.LEADERS_LOADING:
+            return {
+                ...state,
+                isLoading: true,
+                errorMessage: null,
+                leaders: []
+            };
         case ActionTypes.LEADERS_FAILED:
             return {
                 ...state,
